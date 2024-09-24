@@ -9,21 +9,21 @@ pipeline {
         stage(' Dependencies Installation') {
             steps {
                 sh 'npm install --save'
-                echo 'Install Dependencies Finished'
+                echo 'Installing  Finished'
 
                 sh 'npm install snyk --save-dev'
-                echo 'Snyk Installed'
+                echo 'Snyk Installation completed'
 
-                withCredentials([string(credentialsId: 'snyk_tokens', variable: 'SNYK_TOKEN')]) {
+                withCredentials([string(credentialsId: 'snyk_token', variable: 'SNYK_TOKEN')]) {
                     sh './node_modules/.bin/snyk auth $SNYK_TOKEN'
-                    echo 'Snyk Authentication Finished'
+                    echo 'Snyk Authentication Completed'
                 }
             }
         }
         stage('Building Phase') {
             steps {
                 sh 'npm install --save'
-                echo 'Install Dependencies Finished'
+                echo 'Build Phase Completed'
             }
         }
 
@@ -39,11 +39,11 @@ pipeline {
                     }
                 }
 
-                echo 'Snyk Security Scan Completed'
+                echo ' Security Scan Completed'
             }
             post {
                 success {
-                    echo 'Sync Security Scan passed!'
+                    echo ' Security Scan passed!'
                 }
                 failure {
                     echo 'Failed.'
