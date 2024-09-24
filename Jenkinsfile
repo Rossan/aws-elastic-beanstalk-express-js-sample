@@ -6,7 +6,7 @@ pipeline {
         }
     }
     stages {
-        stage('Install Dependencies') {
+        stage(' Dependencies Installation') {
             steps {
                 sh 'npm install --save'
                 echo 'Install Dependencies Finished'
@@ -20,14 +20,14 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('Building Phase') {
             steps {
                 sh 'npm install --save'
                 echo 'Install Dependencies Finished'
             }
         }
 
-        stage('Snyk Security Scan') {
+        stage('Snyk Security Scan Phase') {
             steps {
                  script {
                     def snykResults = sh(script: './node_modules/.bin/snyk test --json', returnStdout: true)
@@ -52,10 +52,9 @@ pipeline {
         }
 
 
-        stage('Test') {
+        stage('Test Phase') {
             steps {
                 script {
-                    sh 'npm install jest'
                     sh 'npm test'
                     echo 'Tests completed.'
                 }
@@ -72,7 +71,7 @@ pipeline {
     }
     post {
         always {
-            echo 'Pipeline finished.'
+            echo 'Pipeline Completed.'
         }
     }
 }
